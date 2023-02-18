@@ -1,10 +1,36 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Главная";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a>building Web apps with ASP.NET Core</a>.</p>
+    <h2 class="display-3">Список клиентов</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Дата рождения</th>
+            <th>Номер телефона</th>
+        </tr>
+        @foreach (var clientModel in Model.Clients)
+        {
+            <tr>
+                <td>@clientModel.Id</td>
+                <td>@clientModel.FirstName</td>
+                <td>@clientModel.LastName</td>
+                <td>@clientModel.Patronymic</td>
+                <td>@clientModel.BirthDate.ToShortDateString()</td>
+                <td>@clientModel.PhoneNumber</td>
+                <td>
+                    <a asp-page="Client/Edit" asp-route-id="@clientModel.Id">Редактировать</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="text-center">
+        <button class="btn-outline-dark rounded" asp-page="Client/Add">Добавить клиента</button>
 </div>

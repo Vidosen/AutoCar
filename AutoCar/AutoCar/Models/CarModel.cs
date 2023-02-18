@@ -2,7 +2,8 @@
 
 public class CarModel
 {
-    public string CarNumber { get; set; } = String.Empty;
-    public string Brand { get; set; } = String.Empty;
-    public short ReleaseYear { get; set; } 
+    public string CarNumber { get; set; }
+    public string? Brand { get; set; } = null;
+    public short ReleaseYear { get; set; }
+
 }
