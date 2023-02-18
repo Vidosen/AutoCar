@@ -3,9 +3,17 @@
 @{
     ViewData["Title"] ="Редактировать клиента";
 }
+@functions
+{
+    string ToString(DateOnly date)
+    {
+        return date.ToString("yyyy'-'MM'-'dd");
+    }
+}
 <div class="text-center">
     <h2 class="display-3">Редактирование клиента</h2>
-    <form method="post" asp-antiforgery="false">
+    <form method="post" asp-antiforgery="true">
+        <input type="hidden" asp-for="Client.Id" value="@Model.Client.Id"/>
         <p>
             <label asp-for="Client.FirstName">Имя</label><br/>
             <input type="text" asp-for="Client.FirstName"/>
@@ -20,11 +28,15 @@
         </p>
         <p>
             <label asp-for="Client.BirthDate">Дата рождения</label><br/>
-            <input type="date" min="@Model.GetMinBirthDateStrig()" max="@Model.GetMaxBirthDateString()" asp-for="Client.BirthDate"/>
+            <input type="date"
+                   min="@ToString(Model.GetMinBirthDate())"
+                   max="@ToString(Model.GetMaxBirthDate())"
+                   value="@ToString(Model.Client.BirthDate)" asp-for="NewBirthDate"/>
         </p>
         <p>
             <label asp-for="Client.PhoneNumber">Номер телефона</label><br/>
             <input type="tel" asp-for="Client.PhoneNumber"/>
-            </p>
+        </p>
+        <input type="submit" value="Сохранить"/>
     </form>
 </div>

@@ -1,5 +1,8 @@
-﻿namespace AutoCar.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
+namespace AutoCar.Models;
+
+[PrimaryKey(nameof(CarNumber))]
 public class CarModel
 {
     public string CarNumber { get; set; }

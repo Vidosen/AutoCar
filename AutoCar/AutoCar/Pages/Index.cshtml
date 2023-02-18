@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Главная";
 }
-
 <div class="text-center">
     <h2 class="display-3">Список клиентов</h2>
     <table>
@@ -25,7 +24,7 @@
                 <td>@clientModel.BirthDate.ToShortDateString()</td>
                 <td>@clientModel.PhoneNumber</td>
                 <td>
-                    <a asp-page="Client/Edit" asp-route-id="@clientModel.Id">Редактировать</a>
+                    <a asp-page="Edit" asp-route-id="@clientModel.Id">Редактировать</a>
                 </td>
             </tr>
         }
