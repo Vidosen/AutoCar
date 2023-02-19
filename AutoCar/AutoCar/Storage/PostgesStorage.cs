@@ -1,32 +1,41 @@
-// ICVR CONFIDENTIAL
-// __________________
-// 
-// [2016] - [2023] ICVR LLC
-// All Rights Reserved.
-// 
-// NOTICE:  All information contained herein is, and remains
-// the property of ICVR LLC and its suppliers,
-// if any.  The intellectual and technical concepts contained
-// herein are proprietary to ICVR LLC
-// and its suppliers and may be covered by U.S. and Foreign Patents,
-// patents in process, and are protected by trade secret or copyright law.
-// Dissemination of this information or reproduction of this material
-// is strictly forbidden unless prior written permission is obtained
-// from ICVR LLC.
-
 using AutoCar.Models;
 using Microsoft.EntityFrameworkCore;
 namespace AutoCar.Storage;
 
 public class PostgresStorage : DbContext
 {
-    public DbSet<ClientModel> Clients => Set<ClientModel>();
-    public DbSet<CarModel> Cars => Set<CarModel>();
-    public DbSet<ParkingSlotModel> ParkingSlots => Set<ParkingSlotModel>();
+    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Car> Cars => Set<Car>();
+    public DbSet<ParkingSlot> ParkingSlots => Set<ParkingSlot>();
     public PostgresStorage()
     {
         Database.EnsureDeleted();
         Database.EnsureCreated();
+    }
+    public void Initialize()
+    {
+        Clients.Add(new Client
+        {
+            FirstName = "Иван",
+            LastName = "Иванов",
+            Patronymic = "Иванович",
+            BirthDate = new DateOnly(1993, 4, 20),
+            PhoneNumber = "8935123456"
+        });
+        Clients.Add(new Client
+        {
+            FirstName = "Алексей",
+            LastName = "Петров",
+            Patronymic = "Петрович",
+            BirthDate = new DateOnly(1986, 4, 23),
+            PhoneNumber = "8241459673"
+        });
+        for (ushort i = 1; i < 1000; i++)
+        {
+            var price = i == 174 ? 400 : i == 53 ? 100 : new Random().Next(100, 500) / 50 * 50;
+            ParkingSlots.Add(new ParkingSlot() { Id = i, Price = price });
+        }
+        SaveChanges();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

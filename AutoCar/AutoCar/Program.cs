@@ -1,27 +1,5 @@
-using AutoCar.Models;
 using AutoCar.Services;
 using AutoCar.Storage;
-
-void InitializeService(PostgresStorage postgresStorage)
-{
-    postgresStorage.Clients.Add(new ClientModel
-    {
-        FirstName = "Иван",
-        LastName = "Иванов",
-        Patronymic = "Иванович",
-        BirthDate = new DateOnly(1993, 4, 20),
-        PhoneNumber = "8935123456"
-    });
-    postgresStorage.Clients.Add(new ClientModel
-    {
-        FirstName = "Алексей",
-        LastName = "Петров",
-        Patronymic = "Петрович",
-        BirthDate = new DateOnly(1986, 4, 23),
-        PhoneNumber = "8241459673"
-    });
-    postgresStorage.SaveChanges();
-}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 var storage = new PostgresStorage();
-InitializeService(storage);
+storage.Initialize();
 builder.Services.AddSingleton(_ => storage);
 builder.Services.AddTransient<ValidationService, ValidationService>();
 var app = builder.Build();

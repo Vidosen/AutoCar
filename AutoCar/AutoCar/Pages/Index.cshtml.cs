@@ -7,7 +7,7 @@ namespace AutoCar.Pages;
 
 public class IndexModel : PageModel
 {
-    public IEnumerable<ClientModel> Clients { get; private set; } = ArraySegment<ClientModel>.Empty;
+    public IEnumerable<Models.Client> Clients { get; private set; } = ArraySegment<Models.Client>.Empty;
     public void OnGet([FromServices] PostgresStorage storage)
     {
         Clients = storage.Clients.ToArray();

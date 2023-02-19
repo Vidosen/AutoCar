@@ -7,7 +7,7 @@ namespace AutoCar.Pages.Client;
 
 public class NewClientModel : PageModel
 {
-    [BindProperty] public ClientModel Client { get; set; }
+    [BindProperty] public Models.Client Client { get; set; }
     [BindProperty] public string NewBirthDate { get; set; }
     public IEnumerable<string> ValidationMessages { get; private set; } = Enumerable.Empty<string>();
     public void OnGet()

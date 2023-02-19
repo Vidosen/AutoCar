@@ -1,5 +1,4 @@
-﻿using AutoCar.Models;
-using AutoCar.Services;
+﻿using AutoCar.Services;
 using AutoCar.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,7 +11,7 @@ public class EditClientModel : PageModel
     {
         _storage = storage;
     }
-    [BindProperty] public ClientModel Client { get; set; }
+    [BindProperty] public Models.Client Client { get; set; }
     [BindProperty] public string NewBirthDate { get; set; }
     public IEnumerable<string> ValidationMessages { get; private set; } = Enumerable.Empty<string>();
     public IActionResult OnGet(int id)
@@ -43,7 +42,7 @@ public class EditClientModel : PageModel
         return service.PassedAllValidations ? RedirectToPage("../Index") : Page();
     }
 
-    private bool TryGetClientForEdit(out ClientModel dbClient)
+    private bool TryGetClientForEdit(out Models.Client dbClient)
     {
         dbClient = null;
         return Client != null && (dbClient = _storage.Clients.Find(Client.Id)) != null;
