@@ -6,7 +6,7 @@ namespace AutoCar.Models;
 public class CarModel
 {
     public string CarNumber { get; set; }
-    public string? Brand { get; set; } = null;
+    public string Brand { get; set; }
     public short ReleaseYear { get; set; }
 
 }

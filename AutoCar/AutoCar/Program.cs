@@ -1,20 +1,21 @@
 using AutoCar.Models;
+using AutoCar.Services;
 using AutoCar.Storage;
 
 void InitializeService(PostgresStorage postgresStorage)
 {
     postgresStorage.Clients.Add(new ClientModel
     {
-        FirstName = "Иванов",
-        LastName = "Иван",
+        FirstName = "Иван",
+        LastName = "Иванов",
         Patronymic = "Иванович",
         BirthDate = new DateOnly(1993, 4, 20),
         PhoneNumber = "8935123456"
     });
     postgresStorage.Clients.Add(new ClientModel
     {
-        FirstName = "Петров",
-        LastName = "Алексей",
+        FirstName = "Алексей",
+        LastName = "Петров",
         Patronymic = "Петрович",
         BirthDate = new DateOnly(1986, 4, 23),
         PhoneNumber = "8241459673"
@@ -29,7 +30,8 @@ builder.Services.AddRazorPages();
 
 var storage = new PostgresStorage();
 InitializeService(storage);
-builder.Services.AddSingleton<PostgresStorage, PostgresStorage>(_ => storage);
+builder.Services.AddSingleton(_ => storage);
+builder.Services.AddTransient<ValidationService, ValidationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

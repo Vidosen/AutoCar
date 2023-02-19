@@ -1,0 +1,47 @@
+﻿@page "{id}"
+@model EditClientModel
+@{
+    ViewData["Title"] ="Редактировать клиента";
+}
+@functions
+{
+    string ToString(DateOnly date)
+    {
+        return date.ToString("yyyy'-'MM'-'dd");
+    }
+}
+<div class="text-center">
+    <h2 class="display-3">@ViewData["Title"]</h2>
+    @foreach (var message in Model.ValidationMessages)
+    {
+        <h4 class="alert-danger">@message</h4>   
+    }
+    <form method="post" asp-antiforgery="true">
+        <input type="hidden" asp-for="Client.Id" value="@Model.Client.Id"/>
+        <p>
+            <label asp-for="Client.FirstName">Имя</label><br/>
+            <input type="text" asp-for="Client.FirstName"/>
+        </p>
+        <p>
+            <label asp-for="Client.LastName">Фамилия</label><br/>
+            <input type="text" asp-for="Client.LastName"/>
+        </p>
+        <p>
+            <label asp-for="Client.Patronymic">Отчество</label><br/>
+            <input type="text" asp-for="Client.Patronymic"/>
+        </p>
+        <p>
+            <label asp-for="Client.BirthDate">Дата рождения</label><br/>
+            <input type="date"
+                   min="@ToString(ValidationService.GetMinBirthDate())"
+                   max="@ToString(ValidationService.GetMaxBirthDate())"
+                   value="@ToString(Model.Client.BirthDate)" asp-for="NewBirthDate"/>
+        </p>
+        <p>
+            <label asp-for="Client.PhoneNumber">Номер телефона</label><br/>
+            <label style="margin-right: 2pt">+7</label>
+            <input type="tel" minlength="10" maxlength="10" asp-for="Client.PhoneNumber"/>
+        </p>
+        <input type="submit" value="Сохранить"/>
+    </form>
+</div>

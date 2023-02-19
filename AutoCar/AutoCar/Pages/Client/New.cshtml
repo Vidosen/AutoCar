@@ -1,7 +1,8 @@
-﻿@page "{id}"
-@model EditModel
+﻿@page
+@model NewClientModel
 @{
-    ViewData["Title"] ="Редактировать клиента";
+    ViewData["Title"] ="Новый клиент";
+    var maxDate = ToString(ValidationService.GetMaxBirthDate());
 }
 @functions
 {
@@ -11,9 +12,12 @@
     }
 }
 <div class="text-center">
-    <h2 class="display-3">Редактирование клиента</h2>
+    <h2 class="display-3">@ViewData["Title"]</h2>
+    @foreach (var message in Model.ValidationMessages)
+    {
+        <h4 class="alert-danger">@message</h4>   
+    }
     <form method="post" asp-antiforgery="true">
-        <input type="hidden" asp-for="Client.Id" value="@Model.Client.Id"/>
         <p>
             <label asp-for="Client.FirstName">Имя</label><br/>
             <input type="text" asp-for="Client.FirstName"/>
@@ -29,13 +33,13 @@
         <p>
             <label asp-for="Client.BirthDate">Дата рождения</label><br/>
             <input type="date"
-                   min="@ToString(Model.GetMinBirthDate())"
-                   max="@ToString(Model.GetMaxBirthDate())"
-                   value="@ToString(Model.Client.BirthDate)" asp-for="NewBirthDate"/>
+                   min="@ToString(ValidationService.GetMinBirthDate())"
+                   max="@maxDate" value="@maxDate" asp-for="NewBirthDate"/>
         </p>
         <p>
             <label asp-for="Client.PhoneNumber">Номер телефона</label><br/>
-            <input type="tel" asp-for="Client.PhoneNumber"/>
+            <label style="margin-right: 2pt">+7</label>
+            <input type="tel" minlength="10" maxlength="10" asp-for="Client.PhoneNumber"/>
         </p>
         <input type="submit" value="Сохранить"/>
     </form>
