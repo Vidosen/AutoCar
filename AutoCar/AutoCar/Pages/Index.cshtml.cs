@@ -1,15 +1,16 @@
-﻿using AutoCar.Models;
-using AutoCar.Storage;
+﻿using AutoCar.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AutoCar.Pages;
-
-public class IndexModel : PageModel
+namespace AutoCar.Pages
 {
-    public IEnumerable<Models.Client> Clients { get; private set; } = ArraySegment<Models.Client>.Empty;
-    public void OnGet([FromServices] PostgresStorage storage)
+    public class IndexModel : PageModel
     {
-        Clients = storage.Clients.ToArray();
+        public IEnumerable<Models.Client> Clients { get; private set; } = Enumerable.Empty<Models.Client>();
+
+        public void OnGet([FromServices] PostgresStorage storage, int listPage)
+        {
+            Clients = storage.Clients.ToArray();
+        }
     }
 }

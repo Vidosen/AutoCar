@@ -1,0 +1,24 @@
+@page
+@model AutoCar.Pages.ParkingSeats
+@{
+    ViewData["Title"] = "Парковочные места";
+}
+
+<div class="text-center">
+    <h2 class="display-3">Парковочные места</h2>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Цена</th>
+            <th>Статус</th>
+        </tr>
+        @foreach (var seat in Model.Seats)
+        {
+            <tr id="@seat.Id">
+                <td>@seat.Id</td>
+                <td>@seat.Price.ToString("C")</td>
+                <td>@(seat.ContractId != null?$"Договор #{seat.ContractId}":"Свободно")</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,27 @@
+@page
+@model AutoCar.Pages.Cars.IndexModel
+@{
+    ViewData["Title"] = "Автомобили";
+}
+
+<div class="text-center">
+    <h2 class="display-3">@ViewData["Title"]</h2>
+    <form method="get" asp-page="New">
+        <input type="submit" value="Добавить автомобиль" class="btn-outline-dark rounded">
+    </form>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Бренд</th>
+            <th>Год выпуска</th>
+        </tr>
+        @foreach (var car in Model.Cars)
+        {
+            <tr>
+                <td>@car.Number</td>
+                <td>@car.Brand</td>
+                <td>@car.ReleaseYear</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -6,7 +6,7 @@ public class PostgresStorage : DbContext
 {
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Car> Cars => Set<Car>();
-    public DbSet<ParkingSlot> ParkingSlots => Set<ParkingSlot>();
+    public DbSet<ParkingSeat> ParkingSeats => Set<ParkingSeat>();
     public PostgresStorage()
     {
         Database.EnsureDeleted();
@@ -30,10 +30,15 @@ public class PostgresStorage : DbContext
             BirthDate = new DateOnly(1986, 4, 23),
             PhoneNumber = "8241459673"
         });
-        for (ushort i = 1; i < 1000; i++)
+        for (ushort id = 1; id < 1000; id++)
         {
-            var price = i == 174 ? 400 : i == 53 ? 100 : new Random().Next(100, 500) / 50 * 50;
-            ParkingSlots.Add(new ParkingSlot() { Id = i, Price = price });
+            var price = id switch
+            {
+                174 => 400,
+                53 => 100,
+                _ => new Random().Next(100, 500) / 50 * 50
+            };
+            ParkingSeats.Add(new ParkingSeat { Id = id, Price = price });
         }
         SaveChanges();
     }

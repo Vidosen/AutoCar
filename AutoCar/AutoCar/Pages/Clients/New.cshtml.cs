@@ -1,9 +1,9 @@
-﻿using AutoCar.Models;
-using AutoCar.Services;
+﻿using AutoCar.Services;
 using AutoCar.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-namespace AutoCar.Pages.Client;
+
+namespace AutoCar.Pages.Clients;
 
 public class NewClientModel : PageModel
 {
@@ -19,7 +19,7 @@ public class NewClientModel : PageModel
         service.ValidateInitials(Client.LastName, "Фамилия");
         service.ValidateInitials(Client.Patronymic, "Отчество");
         service.ValidatePhoneNumber(Client.PhoneNumber);
-        service.ValidateAndRetrivedBirthDate(NewBirthDate,out var newBirthDate);
+        service.ValidateAndRetrieveBirthDate(NewBirthDate,out var newBirthDate);
         Client.BirthDate = newBirthDate;
         if (service.PassedAllValidations)
         {
@@ -27,7 +27,7 @@ public class NewClientModel : PageModel
             storage.SaveChanges();
         }
         ValidationMessages = service.GetValidationMessages();
-        return service.PassedAllValidations ? RedirectToPage("../Index") : Page();
+        return service.PassedAllValidations ? RedirectToPage("/Index") : Page();
     }
     
 }

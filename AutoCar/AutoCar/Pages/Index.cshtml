@@ -1,10 +1,14 @@
 ﻿@page
-@model IndexModel
+@model Pages.IndexModel
 @{
     ViewData["Title"] = "Главная";
 }
+
 <div class="text-center">
     <h2 class="display-3">Список клиентов</h2>
+        <form method="get" asp-page="/Clients/New">
+            <input type="submit" value="Добавить клиента" class="btn-outline-dark rounded">
+        </form>
     <table>
         <tr>
             <th>ID</th>
@@ -16,7 +20,7 @@
         </tr>
         @foreach (var clientModel in Model.Clients)
         {
-            <tr>
+            <tr id="@clientModel.Id">
                 <td>@clientModel.Id</td>
                 <td>@clientModel.FirstName</td>
                 <td>@clientModel.LastName</td>
@@ -24,14 +28,9 @@
                 <td>@clientModel.BirthDate.ToShortDateString()</td>
                 <td>@clientModel.PhoneNumber</td>
                 <td>
-                    <a asp-page="Client/Edit" asp-route-id="@clientModel.Id">Редактировать</a>
+                    <a asp-page="/Clients/Edit" asp-route-id="@clientModel.Id">Редактировать</a>
                 </td>
             </tr>
         }
     </table>
-</div>
-<div class="text-center">
-    <form method="get" asp-page="Client/New">
-        <input type="submit" value="Добавить клиента" class="btn-outline-dark rounded">
-    </form>
 </div>

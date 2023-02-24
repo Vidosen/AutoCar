@@ -1,0 +1,27 @@
+﻿@page
+@model NewCarModel
+@{
+    ViewData["Title"] ="Новый автомобиль";
+}
+<div class="text-center">
+    <h2 class="display-3">@ViewData["Title"]</h2>
+    @foreach (var message in Model.ValidationMessages)
+    {
+        <h4 class="alert-danger">@message</h4>   
+    }
+    <form method="post" asp-antiforgery="true">
+        <p>
+            <label asp-for="Car.Number">Номер автомобиля</label><br/>
+            <input type="text" value="@Model.Car.Number" asp-for="Car.Number"/>
+        </p>
+        <p>
+            <label asp-for="Car.Brand">Бренд</label><br/>
+            <input type="text" value="@Model.Car.Brand" asp-for="Car.Brand"/>
+        </p>
+        <p>
+            <label asp-for="Car.ReleaseYear">Год выпуска</label><br/>
+            <input type="number" min="1900" max="@Model.Car.ReleaseYear" value="@Model.Car.ReleaseYear" asp-for="Car.ReleaseYear"/>
+        </p>
+        <input type="submit" value="Сохранить"/>
+    </form>
+</div>

@@ -2,7 +2,7 @@
 using AutoCar.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-namespace AutoCar.Pages.Client;
+namespace AutoCar.Pages.Clients;
 
 public class EditClientModel : PageModel
 {
@@ -26,7 +26,7 @@ public class EditClientModel : PageModel
         service.ValidateInitials(Client.LastName, "Фамилия");
         service.ValidateInitials(Client.Patronymic, "Отчество");
         service.ValidatePhoneNumber(Client.PhoneNumber);
-        service.ValidateAndRetrivedBirthDate(NewBirthDate,out var newBirthDate);
+        service.ValidateAndRetrieveBirthDate(NewBirthDate,out var newBirthDate);
         Client.BirthDate = newBirthDate;
         if (TryGetClientForEdit(out var dbClient) && service.PassedAllValidations)
         {

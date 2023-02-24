@@ -1,0 +1,47 @@
+@page
+@using AutoCar.Models
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Договора";
+}
+@functions
+{
+    string GetFullName(Client client)
+    {
+        return string.Join(' ', client.FirstName, client.LastName, client.Patronymic);
+    }
+}
+<div class="text-center">
+    <h2 class="display-3">Договора</h2>
+        <form method="get" asp-page="Contracts/New">
+            <input type="submit" value="Новый договор" class="btn-outline-dark rounded">
+        </form>
+    <table>
+        <tr>
+            <th>Номер договора</th>
+            <th>Клиент</th>
+            <th>Номер авто</th>
+            <th>Дата договора</th>
+            <th>Дата начисления</th>
+            <th>Дата оплаты</th>
+            <th>Сумма оплаты</th>
+            <th>Задолженность</th>
+            <th>Статус</th>
+        </tr>
+        @foreach (var contract in Model.Contracts)
+        {
+            <tr>
+                <td>@contract.Id</td>
+                <td><a href="../Index#@contract.ClientId">@GetFullName(contract.Client)</a></td>
+                <td><a href="../Cars#@contract.CarNumber">@contract.Car.Number</a></td>
+                <td>@contract.ContractDate.ToString("d")</td>
+                <td>@(contract.AccuralDate?.ToString("d")??"---")</td>
+                <td>@(contract.PaymentDate?.ToString("d")??"---")</td>
+                <td>@(contract.PaymentAmount?.ToString("C")??"---")</td>
+                <td>@contract.Debt.ToString("C")</td>
+                <td>@(contract.SeatId != null ? $"Место #{contract.SeatId}" : "Неактивен")</td>
+            </tr>
+        }
+    </table>
+</div>
