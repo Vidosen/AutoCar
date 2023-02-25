@@ -14,10 +14,8 @@
 // is strictly forbidden unless prior written permission is obtained
 // from ICVR LLC.
 
-using System.Collections;
 using AutoCar.Models;
 using AutoCar.Storage;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,8 +24,11 @@ namespace AutoCar.Pages;
 public class ParkingSeats : PageModel
 {
     public IEnumerable<ParkingSeat> Seats { get; private set; } = Enumerable.Empty<ParkingSeat>();
-    public void OnGet([FromServices] PostgresStorage storage)
+    public void OnGet()
     {
-        Seats = storage.ParkingSeats.Include(seat=> seat.Contract).ToArray();
+        using (var storage = new PostgresStorage())
+        {
+            Seats = storage.ParkingSeats.Include(seat => seat.Contract).ToArray();
+        }
     }
 }

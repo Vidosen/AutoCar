@@ -1,0 +1,35 @@
+﻿@page
+@model NewContractModel
+@{
+    ViewData["Title"] ="Новый контракт";
+    var maxDate = ToString(ValidationService.GetMaxBirthDate());
+}
+@functions
+{
+    string ToString(DateOnly date)
+    {
+        return date.ToString("yyyy'-'MM'-'dd");
+    }
+}
+<div class="text-center">
+    <h2 class="display-3">@ViewData["Title"]</h2>
+    @foreach (var message in Model.ValidationMessages)
+    {
+        <h4 class="alert-danger">@message</h4>   
+    }
+    <form method="post" asp-antiforgery="true">
+        <p>
+            <label asp-for="Contract.ClientId">ID клиента</label><br/>
+            <input type="number" asp-for="Contract.ClientId"/>
+        </p>
+        <p>
+            <label asp-for="Contract.CarNumber">Номер автомобиля</label><br/>
+            <input type="text" asp-for="Contract.CarNumber"/>
+        </p>
+        <p>
+            <label asp-for="Contract.SeatId">Номер места</label><br/>
+            <input type="number" asp-for="Contract.SeatId"/>
+        </p>
+        <input type="submit" value="Сохранить"/>
+    </form>
+</div>

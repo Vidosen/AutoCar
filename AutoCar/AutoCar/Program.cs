@@ -2,13 +2,11 @@ using AutoCar.Services;
 using AutoCar.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
-builder.Services.AddRazorPages();
+using(var storage = new PostgresStorage())
+    storage.Database.EnsureDeleted();
 
-var storage = new PostgresStorage();
-storage.Initialize();
-builder.Services.AddSingleton(_ => storage);
+builder.Services.AddRazorPages();
 builder.Services.AddTransient<ValidationService, ValidationService>();
 var app = builder.Build();
 

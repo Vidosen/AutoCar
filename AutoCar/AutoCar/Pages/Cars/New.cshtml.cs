@@ -17,24 +17,31 @@ public class NewCarModel : PageModel
             ReleaseYear = ValidationService.MAX_CAR_RELEASE_YEAR
         };
     }
-    public IActionResult OnPost([FromServices] ValidationService service, [FromServices] PostgresStorage storage)
+    public IActionResult OnPost([FromServices] ValidationService service)
     {
+
         var dbConsistencyMessages = new List<string>();
-        CheckStorageForExistingCarWithSameNumber(storage, dbConsistencyMessages);
+        CheckStorageForExistingCarWithSameNumber(dbConsistencyMessages);
         service.ValidateCarNumber(Car.Number);
         service.ValidateCarReleaseYear(Car.ReleaseYear);
         if (dbConsistencyMessages.Count == 0 && service.PassedAllValidations)
         {
-            storage.Cars.Add(Car);
-            storage.SaveChanges();
+            using (var storage = new PostgresStorage())
+            {
+                storage.Cars.Add(Car);
+                storage.SaveChanges();
+            }
         }
         ValidationMessages = dbConsistencyMessages.Concat(service.GetValidationMessages());
         return service.PassedAllValidations ? RedirectToPage("Index") : Page();
     }
 
-    private void CheckStorageForExistingCarWithSameNumber(PostgresStorage storage, List<string> dbConsistencyMessages)
+    private void CheckStorageForExistingCarWithSameNumber(List<string> dbConsistencyMessages)
     {
-        var foundCar = storage.Cars.Find(Car.Number);
-        if (foundCar != null) dbConsistencyMessages.Add($"Aвтомобиль с номером {Car.Number} уже добавлен!");
+        using (var storage = new PostgresStorage())
+        {
+            var foundCar = storage.Cars.Find(Car.Number);
+            if (foundCar != null) dbConsistencyMessages.Add($"Aвтомобиль с номером {Car.Number} уже добавлен!");
+        }
     }
 }

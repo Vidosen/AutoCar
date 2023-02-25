@@ -17,7 +17,14 @@
             <tr id="@seat.Id">
                 <td>@seat.Id</td>
                 <td>@seat.Price.ToString("C")</td>
-                <td>@(seat.ContractId != null?$"Договор #{seat.ContractId}":"Свободно")</td>
+                @if (seat.Contract != null)
+                {
+                    <td>Договор #@seat.Contract.Id</td>   
+                }
+                else
+                {
+                    <td><a href="/Contracts/New?SeatId=@seat.Id">Свободно</a></td>
+                }
             </tr>
         }
     </table>

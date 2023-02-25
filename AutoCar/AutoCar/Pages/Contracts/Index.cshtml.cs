@@ -14,7 +14,10 @@
 // is strictly forbidden unless prior written permission is obtained
 // from ICVR LLC.
 using AutoCar.Models;
+using AutoCar.Storage;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoCar.Pages.Contracts;
 public class IndexModel : PageModel
@@ -23,7 +26,10 @@ public class IndexModel : PageModel
     private Dictionary<int, ushort> _assignedParkingSeats = new();
     public void OnGet()
     {
-        
+        using (var storage = new PostgresStorage())
+        {
+            Contracts = storage.Contracts.Include(c=> c.Client).ToArray();
+        }
     }
 
     public bool TryGetParkingSeatForContractWithId(int id, out ushort parkingSeatId)

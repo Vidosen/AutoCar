@@ -13,7 +13,7 @@ public class NewClientModel : PageModel
     public void OnGet()
     {
     }
-    public IActionResult OnPost([FromServices] ValidationService service, [FromServices] PostgresStorage storage)
+    public IActionResult OnPost([FromServices] ValidationService service)
     {
         service.ValidateInitials(Client.FirstName, "Имя");
         service.ValidateInitials(Client.LastName, "Фамилия");
@@ -23,8 +23,11 @@ public class NewClientModel : PageModel
         Client.BirthDate = newBirthDate;
         if (service.PassedAllValidations)
         {
-            storage.Clients.Add(Client);
-            storage.SaveChanges();
+            using (var storage = new PostgresStorage())
+            {
+                storage.Clients.Add(Client);
+                storage.SaveChanges();
+            }
         }
         ValidationMessages = service.GetValidationMessages();
         return service.PassedAllValidations ? RedirectToPage("/Index") : Page();
