@@ -1,16 +1,8 @@
 @page
-@using AutoCar.Models
 @model IndexModel
 
 @{
     ViewData["Title"] = "Договора";
-}
-@functions
-{
-    string GetFullName(Client client)
-    {
-        return string.Join(' ', client.FirstName, client.LastName, client.Patronymic);
-    }
 }
 <div class="text-center">
     <h2 class="display-3">Договора</h2>
@@ -33,11 +25,11 @@
         {
             <tr>
                 <td>@contract.Id</td>
-                <td><a href="../Index#@contract.ClientId">@GetFullName(contract.Client)</a></td>
+                <td><a href="../Index#@contract.ClientId">@contract.Client.GetFullName()</a></td>
                 <td><a href="../Cars#@contract.CarNumber">@contract.CarNumber</a></td>
-                <td>@contract.ContractDate.ToString("d")</td>
-                <td>@(contract.AccuralDate?.ToString("d")??"---")</td>
-                <td>@(contract.PaymentDate?.ToString("d")??"---")</td>
+                <td>@contract.ContractDate.ToString("dd/MM/yyyy")</td>
+                <td>@(contract.AccuralDate?.ToString("dd/MM/yyyy")??"---")</td>
+                <td>@(contract.PaymentDate?.ToString("dd/MM/yyyy")??"---")</td>
                 <td>@(contract.PaymentAmount?.ToString("C")??"---")</td>
                 <td>@contract.Debt.ToString("C")</td>
                 <td>@(contract.SeatId != null ? $"Место #{contract.SeatId}" : "Неактивен")</td>

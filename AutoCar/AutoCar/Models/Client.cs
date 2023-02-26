@@ -13,4 +13,5 @@ public class Client
     [Required] public DateOnly BirthDate { get; set; }
     public string PhoneNumber { get; set; }
     public ICollection<Contract> Contracts { get; set; }
+    public string GetFullName() => string.Join(' ', LastName, FirstName, Patronymic);
 }

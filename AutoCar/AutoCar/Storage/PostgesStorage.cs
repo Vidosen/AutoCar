@@ -1,5 +1,8 @@
+using System.Data;
 using AutoCar.Models;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+
 namespace AutoCar.Storage;
 
 public class PostgresStorage : DbContext
@@ -11,6 +14,29 @@ public class PostgresStorage : DbContext
     public PostgresStorage()
     {
         Database.EnsureCreated();
+    }
+
+    public async Task<DataTable> ExecuteReportAsync(string queryPath)
+    {
+        using var dt = new DataTable();
+        NpgsqlConnection connection = null;
+        try
+        {
+            connection = (NpgsqlConnection)Database.GetDbConnection();
+            await connection.OpenAsync();
+            var reportQuery = await File.ReadAllTextAsync(queryPath);
+            using var com = new NpgsqlDataAdapter(reportQuery, connection);
+            com.Fill(dt);
+        }
+        finally
+        {
+            if (connection != null)
+            {
+                if (connection.State != ConnectionState.Closed) await connection.CloseAsync();
+                await connection.DisposeAsync();
+            }
+        }
+        return dt;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -60,10 +86,36 @@ public class PostgresStorage : DbContext
         }
         modelBuilder.Entity<ParkingSeat>()
             .HasData(seats);
+
+        modelBuilder.Entity<Contract>()
+            .HasData(new Contract
+        {
+            Id = 1,
+            ClientId = 1,
+            CarNumber = "А888НА174",
+            SeatId = 174,
+            ContractDate = new DateOnly(2007, 4, 19),
+            AccuralDate = new DateOnly(2007, 4, 19),
+            PaymentAmount = 500,
+            PaymentDate = new DateOnly(2007, 4, 20),
+            Debt = -100
+        }, new Contract
+        {
+            Id = 2,
+            ClientId = 2,
+            CarNumber = "O812OP74",
+            SeatId = 53,
+            ContractDate = new DateOnly(2007, 4, 20),
+            AccuralDate = new DateOnly(2007, 4, 20),
+            PaymentAmount = 100,
+            PaymentDate = new DateOnly(2007, 4, 25),
+            Debt = 0
+        });
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=demo_db;Username=postgres;Password=autocar");
         optionsBuilder.LogTo(Console.WriteLine);
     }  

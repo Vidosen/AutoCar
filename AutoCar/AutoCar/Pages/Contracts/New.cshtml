@@ -2,14 +2,6 @@
 @model NewContractModel
 @{
     ViewData["Title"] ="Новый контракт";
-    var maxDate = ToString(ValidationService.GetMaxBirthDate());
-}
-@functions
-{
-    string ToString(DateOnly date)
-    {
-        return date.ToString("yyyy'-'MM'-'dd");
-    }
 }
 <div class="text-center">
     <h2 class="display-3">@ViewData["Title"]</h2>
