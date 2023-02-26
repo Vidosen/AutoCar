@@ -16,7 +16,7 @@ public class PostgresStorage : DbContext
         Database.EnsureCreated();
     }
 
-    public async Task<DataTable> ExecuteReportAsync(string queryPath)
+    public async Task<DataTable> ExecuteReportAsync(string queryPath, IReadOnlyDictionary<string, object> parameters = null)
     {
         using var dt = new DataTable();
         NpgsqlConnection connection = null;
@@ -25,16 +25,16 @@ public class PostgresStorage : DbContext
             connection = (NpgsqlConnection)Database.GetDbConnection();
             await connection.OpenAsync();
             var reportQuery = await File.ReadAllTextAsync(queryPath);
-            using var com = new NpgsqlDataAdapter(reportQuery, connection);
-            com.Fill(dt);
+            await using var command = new NpgsqlCommand(reportQuery, connection);
+            if (parameters != null)
+                foreach (var pair in parameters)
+                    command.Parameters.AddWithValue(pair.Key, pair.Value);
+            using var adapter = new NpgsqlDataAdapter(command);
+            adapter.Fill(dt);
         }
         finally
         {
-            if (connection != null)
-            {
-                if (connection.State != ConnectionState.Closed) await connection.CloseAsync();
-                await connection.DisposeAsync();
-            }
+            if (connection is { State: not ConnectionState.Closed }) await connection.CloseAsync();
         }
         return dt;
     }

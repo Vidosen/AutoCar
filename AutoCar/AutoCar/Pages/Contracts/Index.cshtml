@@ -7,9 +7,10 @@
 <div class="text-center">
     <h2 class="display-3">Договора</h2>
         <form method="get" asp-page="/Contracts/New">
-            <input type="submit" value="Новый договор" class="btn-outline-dark rounded">
+            <input class="btn btn-primary" type="submit" value="Новый договор">
         </form>
-    <table>
+    <table class="table">
+        <thead>
         <tr>
             <th>Номер договора</th>
             <th>Клиент</th>
@@ -21,19 +22,22 @@
             <th>Задолженность</th>
             <th>Статус</th>
         </tr>
-        @foreach (var contract in Model.Contracts)
-        {
-            <tr>
-                <td>@contract.Id</td>
-                <td><a href="../Index#@contract.ClientId">@contract.Client.GetFullName()</a></td>
-                <td><a href="../Cars#@contract.CarNumber">@contract.CarNumber</a></td>
-                <td>@contract.ContractDate.ToString("dd/MM/yyyy")</td>
-                <td>@(contract.AccuralDate?.ToString("dd/MM/yyyy")??"---")</td>
-                <td>@(contract.PaymentDate?.ToString("dd/MM/yyyy")??"---")</td>
-                <td>@(contract.PaymentAmount?.ToString("C")??"---")</td>
-                <td>@contract.Debt.ToString("C")</td>
-                <td>@(contract.SeatId != null ? $"Место #{contract.SeatId}" : "Неактивен")</td>
-            </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var contract in Model.Contracts)
+            {
+                <tr>
+                    <td>@contract.Id</td>
+                    <td><a href="../Index#@contract.ClientId">@contract.Client.GetFullName()</a></td>
+                    <td><a href="../Cars#@contract.CarNumber">@contract.CarNumber</a></td>
+                    <td>@contract.ContractDate.ToString("dd/MM/yyyy")</td>
+                    <td>@(contract.AccuralDate?.ToString("dd/MM/yyyy") ?? "---")</td>
+                    <td>@(contract.PaymentDate?.ToString("dd/MM/yyyy") ?? "---")</td>
+                    <td>@(contract.PaymentAmount?.ToString("C") ?? "---")</td>
+                    <td>@contract.Debt.ToString("C")</td>
+                    <td>@(contract.SeatId != null ? $"Место #{contract.SeatId}" : "Неактивен")</td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>

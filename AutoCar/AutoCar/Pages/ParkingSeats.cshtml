@@ -6,26 +6,30 @@
 
 <div class="text-center">
     <h2 class="display-3">Парковочные места</h2>
-    <table>
+    <table class="table">
+        <thead>
         <tr>
             <th>Номер</th>
             <th>Цена</th>
             <th>Статус</th>
         </tr>
-        @foreach (var seat in Model.Seats)
-        {
-            <tr id="@seat.Id">
-                <td>@seat.Id</td>
-                <td>@seat.Price.ToString("C")</td>
-                @if (seat.Contract != null)
-                {
-                    <td>Договор #@seat.Contract.Id</td>   
-                }
-                else
-                {
-                    <td><a href="/Contracts/New?SeatId=@seat.Id">Свободно</a></td>
-                }
-            </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var seat in Model.Seats)
+            {
+                <tr id="@seat.Id">
+                    <td>@seat.Id</td>
+                    <td>@seat.Price.ToString("C")</td>
+                    @if (seat.Contract != null)
+                    {
+                        <td>Договор #@seat.Contract.Id</td>
+                    }
+                    else
+                    {
+                        <td><a href="/Contracts/New?SeatId=@seat.Id">Свободно</a></td>
+                    }
+                </tr>
+            }
+        </tbody>
     </table>
 </div>

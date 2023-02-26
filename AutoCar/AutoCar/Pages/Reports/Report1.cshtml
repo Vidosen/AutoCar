@@ -6,18 +6,22 @@
 <div class="text-center">
     <h2 class="display-3">@ViewData["Title"]</h2>
     <p>Отчет выявляет, какой клиент больше всего задолжал автостоянке и когда у него был выполнен последний платеж.</p>
-    <table>
+    <table class="table">
+        <thead>
         <tr>
             <th>ID Клиента</th>
             <th>ФИО Клиента</th>
             <th>Суммарная задолженность</th>
             <th>Дата последнего платежа</th>
         </tr>
+        </thead>
+        <tbody>
         <tr>
             <td>@Model.Report.Id</td>
             <td>@Model.Report.FullName</td>
             <td>@Model.Report.TotalDebt.ToString("C")</td>
             <td>@(Model.Report.LastPaymentDate?.ToString("dd/MM/yyyy") ?? "Платежа не было")</td>
         </tr>
+        </tbody>
     </table>
 </div>

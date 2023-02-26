@@ -7,14 +7,17 @@
 <div class="text-center">
     <h2 class="display-3">@ViewData["Title"]</h2>
     <form method="get" asp-page="New">
-        <input type="submit" value="Добавить автомобиль" class="btn-outline-dark rounded">
+        <input class="btn btn-primary" type="submit" value="Добавить автомобиль">
     </form>
-    <table>
+    <table class="table">
+        <thead>
         <tr>
             <th>Номер</th>
             <th>Бренд</th>
             <th>Год выпуска</th>
         </tr>
+        </thead>
+        <tbody>
         @foreach (var car in Model.Cars)
         {
             <tr>
@@ -23,5 +26,6 @@
                 <td>@car.ReleaseYear</td>
             </tr>
         }
+        </tbody>
     </table>
 </div>

@@ -7,9 +7,10 @@
 <div class="text-center">
     <h2 class="display-3">Список клиентов</h2>
         <form method="get" asp-page="/Clients/New">
-            <input type="submit" value="Добавить клиента" class="btn-outline-dark rounded">
+            <input class="btn btn-primary" type="submit" value="Добавить клиента">
         </form>
-    <table>
+    <table class="table">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Имя</th>
@@ -18,19 +19,22 @@
             <th>Дата рождения</th>
             <th>Номер телефона</th>
         </tr>
-        @foreach (var clientModel in Model.Clients)
-        {
-            <tr id="@clientModel.Id">
-                <td>@clientModel.Id</td>
-                <td>@clientModel.FirstName</td>
-                <td>@clientModel.LastName</td>
-                <td>@clientModel.Patronymic</td>
-                <td>@clientModel.BirthDate.ToString("dd/MM/yyyy")</td>
-                <td>@clientModel.PhoneNumber</td>
-                <td>
-                    <a asp-page="/Clients/Edit" asp-route-id="@clientModel.Id">Редактировать</a>
-                </td>
-            </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var clientModel in Model.Clients)
+            {
+                <tr id="@clientModel.Id">
+                    <td>@clientModel.Id</td>
+                    <td>@clientModel.FirstName</td>
+                    <td>@clientModel.LastName</td>
+                    <td>@clientModel.Patronymic</td>
+                    <td>@clientModel.BirthDate.ToString("dd/MM/yyyy")</td>
+                    <td>@clientModel.PhoneNumber</td>
+                    <td>
+                        <a asp-page="/Clients/Edit" asp-route-id="@clientModel.Id">Редактировать</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>

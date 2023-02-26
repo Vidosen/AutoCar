@@ -1,0 +1,31 @@
+@page
+@model AutoCar.Pages.Reports.Report2
+@{
+    ViewData["Title"] = "Отчёт #2";
+}
+<div class="text-center">
+    <h2 class="display-3">@ViewData["Title"]</h2>
+    <p>Отчет показывает сколько автомобилей имеют более одного хозяина и выводит всех хозяев.</p>
+    <h5>Автомобилей с несолькими хозяевами: @Model.MultiClientCars.Count()</h5>
+    @foreach (var multiClientCar in Model.MultiClientCars)
+    {
+        <table class="table">
+            <thead>
+            <tr><th colspan="2">Владельцы @multiClientCar.CarNumber:</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>ID Клиента</th>
+                    <th>ФИО Клиента</th>
+                </tr>
+                @foreach (var clientData in multiClientCar.Clients)
+                {
+                    <tr>
+                        <td>@clientData.Id</td>
+                        <td>@clientData.FullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>   
+    }
+</div>
