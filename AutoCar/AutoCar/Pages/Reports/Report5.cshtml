@@ -1,0 +1,42 @@
+@page
+@model AutoCar.Pages.Reports.Report5
+@{
+    Layout = "_ReportMasterLayout";
+    ViewData["Title"] = "Отчёт #5";
+}
+<div class="text-center">
+    <h2 class="display-3">@ViewData["Title"]</h2>
+    <p>Отчет выводит все номера и владельцев автомобилей, относящиеся к указанной пользователем марки автомобиля.</p>
+    <form asp-antiforgery="true">
+        <div class="mb-3">
+            <label for="brand" class="form-label">Марка авто: </label>
+            <input type="text"  name="brand" id="brand" class="form-control">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Сформировать отчёт">
+    </form>
+    @if (Model.Report != null)
+    {
+        <h5>Результат поиска по марке @Model.Report.Brand:</h5>
+        @foreach (var car in Model.Report.Cars)
+        {
+            <table class="table">
+                <thead>
+                <tr><th colspan="2">Владельцы @Model.Report.Brand @car.CarNumber:</th></tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>ID Клиента</th>
+                    <th>ФИО Клиента</th>
+                </tr>
+                @foreach (var clientData in car.Clients)
+                {
+                    <tr>
+                        <td>@clientData.Id</td>
+                        <td>@clientData.FullName</td>
+                    </tr>
+                }
+                </tbody>
+            </table>   
+        }   
+    }
+</div>
