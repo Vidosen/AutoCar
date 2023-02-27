@@ -1,13 +1,14 @@
 @page
-@model AutoCar.Pages.Reports.Report3
+@model AutoCar.Pages.Reports.Report4
 @{
     Layout = "_ReportMasterLayout";
-    ViewData["Title"] = "Отчёт #3";
+    ViewData["Title"] = "Отчёт #4";
     var todayString = @DateTimeSerivce.GetTodayDate().ToHTMLString();
 }
 <div class="text-center">
     <h2 class="display-3">@ViewData["Title"]</h2>
-    <p>Отчет выводит автомобиль, имеющий самый маленький долг к автостоянке за указанный пользователем период.</p>
+    <p>Отчет выводит сумму долга по всем клиентам за указанный пользователем период, 
+        которая вычисляется из расчета того, что начисление происходит 1 раз в месяц, оплаты могут происходить хоть каждый день.</p>
     <form asp-antiforgery="true">
         <div class="mb-3">
             <label for="startInterval" class="form-label">Начальная дата: </label>
@@ -25,19 +26,9 @@
     {
         <h5>Результат поиска по дате (@Model.Report.FromDate)-(@Model.Report.ToDate):</h5>
         <table class="table">
-            <thead>
-            <tr>
-                <th>Номер автомобиля</th>
-                <th>Марка автомобиля</th>
-                <th>Год выпуска</th>
-                <th>Задолженность за период</th>
-            </tr>
-            </thead>
             <tbody>
             <tr>
-                <td>@Model.Report.Car.Number</td>
-                <td>@Model.Report.Car.Brand</td>
-                <td>@Model.Report.Car.ReleaseYear</td>
+                <th>Суммарный размер задолженности за период</th>
                 <td>@Model.Report.TotalDebt</td>
             </tr>
             </tbody>

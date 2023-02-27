@@ -28,7 +28,7 @@
                     <td>@clientModel.FirstName</td>
                     <td>@clientModel.LastName</td>
                     <td>@clientModel.Patronymic</td>
-                    <td>@clientModel.BirthDate.ToString("dd/MM/yyyy")</td>
+                    <td>@clientModel.BirthDate.ToFormattedString()</td>
                     <td>@clientModel.PhoneNumber</td>
                     <td>
                         <a asp-page="/Clients/Edit" asp-route-id="@clientModel.Id">Редактировать</a>

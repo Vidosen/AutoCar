@@ -21,7 +21,7 @@
             <td>@Model.Report.Id</td>
             <td>@Model.Report.FullName</td>
             <td>@Model.Report.TotalDebt.ToString("C")</td>
-            <td>@(Model.Report.LastPaymentDate?.ToString("dd/MM/yyyy") ?? "Платежа не было")</td>
+            <td>@(Model.Report.LastPaymentDate?.ToFormattedString() ?? "Платежа не было")</td>
         </tr>
         </tbody>
     </table>

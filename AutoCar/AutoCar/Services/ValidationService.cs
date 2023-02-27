@@ -9,12 +9,6 @@ public class ValidationService
     public readonly static string SAMPLE_CAR_NUMBER = "А888НА174";
     public bool PassedAllValidations { get; private set; }
     private readonly List<string> _validationMessages;
-    public static DateOnly GetMaxBirthDate()
-    {
-        var maxDate = DateOnly.FromDateTime(DateTime.Today.AddYears(-18));
-        return maxDate;
-    }
-    public static DateOnly GetMinBirthDate() => new(1900,01,01);
 
     public ValidationService()
     {
@@ -46,7 +40,7 @@ public class ValidationService
     {
         var isValid = !string.IsNullOrEmpty(input) && DateOnly.TryParse(input, out outBirthDate);
         if (!isValid) _validationMessages.Add($"Поле \"Дата рождения\" не должно выходить за диапазон" +
-                                              $"{GetMinBirthDate()} и {GetMaxBirthDate()}!");
+                                              $"{DateTimeSerivce.GetMinBirthDate()} и {DateTimeSerivce.GetMaxBirthDate()}!");
         PassedAllValidations &= isValid;
         return isValid;
     }

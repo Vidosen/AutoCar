@@ -30,9 +30,9 @@
                     <td>@contract.Id</td>
                     <td><a href="../Index#@contract.ClientId">@contract.Client.GetFullName()</a></td>
                     <td><a href="../Cars#@contract.CarNumber">@contract.CarNumber</a></td>
-                    <td>@contract.ContractDate.ToString("dd/MM/yyyy")</td>
-                    <td>@(contract.AccuralDate?.ToString("dd/MM/yyyy") ?? "---")</td>
-                    <td>@(contract.PaymentDate?.ToString("dd/MM/yyyy") ?? "---")</td>
+                    <td>@contract.ContractDate.ToFormattedString()</td>
+                    <td>@(contract.AccuralDate?.ToFormattedString() ?? "---")</td>
+                    <td>@(contract.PaymentDate?.ToFormattedString()?? "---")</td>
                     <td>@(contract.PaymentAmount?.ToString("C") ?? "---")</td>
                     <td>@contract.Debt.ToString("C")</td>
                     <td>@(contract.SeatId != null ? $"Место #{contract.SeatId}" : "Неактивен")</td>

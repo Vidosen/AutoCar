@@ -59,6 +59,15 @@ public class PostgresStorage : DbContext
                 Patronymic = "Петрович",
                 BirthDate = new DateOnly(1986, 4, 23),
                 PhoneNumber = "8241459673"
+            },
+            new Client
+            {
+                Id = 3,
+                FirstName = "Василий",
+                LastName = "Шаров",
+                Patronymic = "Анатольевич",
+                BirthDate = new DateOnly(1979, 2, 10),
+                PhoneNumber = "9347859422"
             });
         modelBuilder.Entity<Car>()
             .HasData(new Car
@@ -110,6 +119,17 @@ public class PostgresStorage : DbContext
             PaymentAmount = 100,
             PaymentDate = new DateOnly(2007, 4, 25),
             Debt = 0
+        }, new Contract
+        {
+            Id = 3,
+            ClientId = 3,
+            CarNumber = "O812OP74",
+            SeatId = 2,
+            ContractDate = new DateOnly(2007, 5, 10),
+            AccuralDate = new DateOnly(2007, 5, 10),
+            PaymentAmount = null,
+            PaymentDate = null,
+            Debt = 400
         });
     }
 

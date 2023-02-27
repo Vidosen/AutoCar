@@ -3,13 +3,6 @@
 @{
     ViewData["Title"] ="Редактировать клиента";
 }
-@functions
-{
-    string ToString(DateOnly date)
-    {
-        return date.ToString("yyyy'-'MM'-'dd");
-    }
-}
 <div class="text-center">
     <h2 class="display-3">@ViewData["Title"]</h2>
     @foreach (var message in Model.ValidationMessages)
@@ -33,9 +26,9 @@
         <p>
             <label asp-for="Client.BirthDate">Дата рождения</label><br/>
             <input type="date"
-                   min="@ToString(ValidationService.GetMinBirthDate())"
-                   max="@ToString(ValidationService.GetMaxBirthDate())"
-                   value="@ToString(Model.Client.BirthDate)" asp-for="NewBirthDate"/>
+                   min="@DateTimeSerivce.GetMinBirthDate().ToHTMLString()"
+                   max="@DateTimeSerivce.GetMaxBirthDate().ToHTMLString()"
+                   value="@Model.Client.BirthDate.ToHTMLString()" asp-for="NewBirthDate"/>
         </p>
         <p>
             <label asp-for="Client.PhoneNumber">Номер телефона</label><br/>
