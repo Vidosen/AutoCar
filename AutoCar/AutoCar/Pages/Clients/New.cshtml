@@ -11,29 +11,29 @@
         <h4 class="alert-danger">@message</h4>   
     }
     <form method="post" asp-antiforgery="true">
-        <p>
-            <label asp-for="Client.FirstName">Имя</label><br/>
-            <input type="text" asp-for="Client.FirstName"/>
-        </p>
-        <p>
-            <label asp-for="Client.LastName">Фамилия</label><br/>
-            <input type="text" asp-for="Client.LastName"/>
-        </p>
-        <p>
-            <label asp-for="Client.Patronymic">Отчество</label><br/>
-            <input type="text" asp-for="Client.Patronymic"/>
-        </p>
-        <p>
-            <label asp-for="Client.BirthDate">Дата рождения</label><br/>
+        <div class="mb-3">
+            <label asp-for="Client.FirstName" class="form-label">Имя</label><br/>
+            <input type="text" asp-for="Client.FirstName" class="form-control-sm"/>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Client.LastName" class="form-label">Фамилия</label><br/>
+            <input type="text" asp-for="Client.LastName" class="form-control-sm"/>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Client.Patronymic" class="form-label">Отчество</label><br/>
+            <input type="text" asp-for="Client.Patronymic" class="form-control-sm"/>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Client.BirthDate" class="form-label">Дата рождения</label><br/>
             <input type="date"
                    min="@DateTimeSerivce.GetMinBirthDate().ToHTMLString()"
-                   max="@maxDate" value="@maxDate" asp-for="NewBirthDate"/>
-        </p>
-        <p>
-            <label asp-for="Client.PhoneNumber">Номер телефона</label><br/>
+                   max="@maxDate" value="@maxDate" asp-for="NewBirthDate" class="form-control-sm"/>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Client.PhoneNumber" class="form-label">Номер телефона</label><br/>
             <label style="margin-right: 2pt">+7</label>
-            <input type="tel" minlength="10" maxlength="10" asp-for="Client.PhoneNumber"/>
-        </p>
-        <input type="submit" value="Сохранить"/>
+            <input type="tel" minlength="10" maxlength="10" asp-for="Client.PhoneNumber" class="form-control-sm"/>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Сохранить"/>
     </form>
 </div>

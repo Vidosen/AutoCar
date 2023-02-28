@@ -12,12 +12,12 @@
     <form asp-antiforgery="true">
         <div class="mb-3">
             <label for="startInterval" class="form-label">Начальная дата: </label>
-            <input type="date" name="startInterval" id="startInterval" class="form-control"
+            <input type="date" name="startInterval" id="startInterval" class="form-control-sm"
                    max="@todayString" value="@todayString">
         </div>
         <div class="mb-3">
             <label for="endInterval" class="form-label">Конечная дата: </label>
-            <input type="date" name="endInterval" id="endInterval" class="form-control"
+            <input type="date" name="endInterval" id="endInterval" class="form-control-sm"
                    max="@todayString" value="@todayString">
         </div>
         <input class="btn btn-primary" type="submit" value="Сформировать отчёт">

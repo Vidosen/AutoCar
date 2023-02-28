@@ -9,10 +9,7 @@ namespace AutoCar.Pages
 
         public void OnGet(int listPage)
         {
-            using (var storage = new PostgresStorage())
-            {
-                Clients = storage.Clients.ToArray();
-            }
+            using (var storage = new PostgresStorage()) Clients = storage.Clients.ToArray();
         }
     }
 }

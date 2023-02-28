@@ -11,11 +11,6 @@ public class NewCarModel : PageModel
     public IEnumerable<string> ValidationMessages { get; private set; } = Enumerable.Empty<string>();
     public void OnGet()
     {
-        Car = new Car
-        {
-            Number = ValidationService.SAMPLE_CAR_NUMBER,
-            ReleaseYear = ValidationService.MAX_CAR_RELEASE_YEAR
-        };
     }
     public IActionResult OnPost([FromServices] ValidationService service)
     {

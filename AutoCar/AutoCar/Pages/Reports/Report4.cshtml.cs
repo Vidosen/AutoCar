@@ -15,11 +15,16 @@ public class Report4 : PageModel
     public async Task OnPost([FromServices] IWebHostEnvironment appEnvironment, DateTime startInterval, DateTime endInterval)
     {
         await using var storage = new PostgresStorage();
-        using var table = await storage.ExecuteReportAsync(Path.Combine(appEnvironment.WebRootPath, "queries", "report4.sql"));
-        var response = table.Rows[0];
         var fromDate = DateOnly.FromDateTime(startInterval);
         var toDate = DateOnly.FromDateTime(endInterval);
-        var totalDebt = Convert.ToDecimal(response["TotalDebt"]);
+        using var table = await storage.ExecuteReportAsync(Path.Combine(appEnvironment.WebRootPath, "queries", "report4.sql"),
+            new Dictionary<string, object>()
+            {
+                { "StartInterval", fromDate },
+                { "EndInterval", toDate }
+            });
+        var response = table.Rows[0];
+        var totalDebt = response["TotalDebt"] is DBNull ? 0 : Convert.ToDecimal(response["TotalDebt"]);
         Report = new ReportData(fromDate, toDate, totalDebt);
     }
 }
